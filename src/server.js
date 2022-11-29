@@ -4,7 +4,7 @@ import AuthCheck from './security/AuthCheck.js'
 import addTaskToFirestore, {getTasksCount, readTasksFromFirestore, readTasksByDateFromFirestore, updateTaskInFirestore, logTimeInFirestore, deleteTaskFromFirestore, getTaskFromFirestore, getDailyLogs,getMonthlyLogs, getYearlyLogs} from './FirestoreUtils.js'
 
 const app = express()
-const port = process.env.PORT || 5000
+const port = process.env.PORT || 4000
 
 app.use(cors())
 app.use(AuthCheck.decodeToken)
