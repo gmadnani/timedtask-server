@@ -1,17 +1,5 @@
 import admin from './config/firebaseConfig.js'
 
-// class FirestoreUtils{
-//     firestoreDB = "Hello" //admin.firestore()
-
-//     static addTaskToFirestore = () => {
-//         //firestoreDB.collection("tasklist").doc(task)
-//         console.log("Hello")
-//     }
-// }
-
-// export default new FirestoreUtils.addTaskToFirestore()
-// //module.exports = addTaskToFirestore
-
 const firestoreDB = admin.firestore()
 
 const addTaskToFirestore = (task) =>{

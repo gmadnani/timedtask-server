@@ -15,7 +15,6 @@ app.get('/', (req, res) =>{
 })
 
 app.get('/api/getusermeta', (req, res) =>{
-    //console.log(req.user)
     return res.json({
         userName: req.user.name,
         userPicture: req.user.picture,
