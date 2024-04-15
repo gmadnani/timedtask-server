@@ -64,7 +64,12 @@ app.post('/api/createtasks', (req, res) => {
 });
 
 app.post('/api/updateTask', (req, res) =>{
-    const taskToUpdate = req.body
+    const taskToUpdate = {
+        ...req.body,
+        taskTitle: encryptData(req.body.taskTitle),
+        taskCategory: encryptData(req.body.taskCategory),
+        taskKeywords: encryptData(req.body.taskKeywords)
+    };
     updateTaskInFirestore(taskToUpdate)
     return res.status(200)
 })
