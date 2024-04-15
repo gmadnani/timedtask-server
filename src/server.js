@@ -23,8 +23,9 @@ const encryptData = (data) => {
     return encryptedData;
 };
 
-const decryptData = (encryptedData, key) => {
-    const decipher = crypto.createDecipher('aes-256-cbc', key);
+// Decryption function
+const decryptData = (encryptedData) => {
+    const decipher = crypto.createDecipheriv('aes-256-cbc', process.env.ENCRYPTION_KEY, Buffer.alloc(16));
     let decryptedData = decipher.update(encryptedData, 'hex', 'utf8');
     decryptedData += decipher.final('utf8');
     return decryptedData;
@@ -81,12 +82,18 @@ app.post('/api/deleteTask', (req, res) =>{
     return res.status(200)
 })
 
-
 app.get('/api/gettasklist', async (req, res) =>{
-    const userId = req.query.userId
-    const taskList = await readTasksFromFirestore(userId)
-    return res.send(taskList)
-})
+    const userId = req.query.userId;
+    const taskList = await readTasksFromFirestore(userId);
+    const decryptedTaskList = taskList.map(task => ({
+        ...task,
+        taskTitle: decryptData(task.taskTitle),
+        taskCategory: decryptData(task.taskCategory),
+        taskKeywords: decryptData(task.taskKeywords)
+    }));
+    return res.send(decryptedTaskList);
+});
+
 
 app.get('/api/gettasklistfordate', async (req, res) => {
     const userId = req.query.userId
