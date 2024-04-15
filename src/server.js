@@ -112,6 +112,12 @@ app.get('/api/getTask', async (req, res) => {
     const userId = req.query.userId
     const taskId = req.query.taskId
     const task = await getTaskFromFirestore(userId, taskId)
+    
+    // Decrypt task data
+    task.taskTitle = decryptData(task.taskTitle);
+    task.taskCategory = decryptData(task.taskCategory);
+    task.taskKeywords = decryptData(task.taskKeywords);
+    
     return res.send(task)
 })
 
