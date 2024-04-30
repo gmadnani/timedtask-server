@@ -21,7 +21,7 @@ const limiter = rateLimit({
 app.use(limiter);
 
 app.use(cors());
-app.use(AuthCheck.decodeToken);
+// app.use(AuthCheck.decodeToken);
 app.use(express.json());
 
 // Encryption function
