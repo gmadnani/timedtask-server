@@ -12,10 +12,6 @@ dotenv.config();
 const app = express();
 const port = process.env.PORT || 4000;
 
-app.use(cors());
-app.use(AuthCheck.decodeToken);
-app.use(express.json());
-
 // Rate limiting middleware
 const limiter = rateLimit({
     windowMs: 15 * 60 * 1000, // 15 minutes
@@ -23,6 +19,10 @@ const limiter = rateLimit({
     message: 'Too many requests from this IP, please try again later'
 });
 app.use(limiter);
+
+app.use(cors());
+app.use(AuthCheck.decodeToken);
+app.use(express.json());
 
 // Encryption function
 const encryptData = (data) => {
