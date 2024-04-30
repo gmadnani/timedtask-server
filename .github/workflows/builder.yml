@@ -18,6 +18,6 @@ jobs:
       - name: Daemonize our Node API service
         run: npm start &
       - name: Run HawkScan
-        uses: stackhawk/hawkscan-action@1.3.4
+        uses: stackhawk/hawkscan-action@v1.3.4
         with:
           apiKey: ${{ secrets.HAWK_API_KEY }}
