@@ -4,6 +4,7 @@ import AuthCheck from './security/AuthCheck.js';
 import addTaskToFirestore, { getTasksCount, readTasksFromFirestore, readTasksByDateFromFirestore, updateTaskInFirestore, logTimeInFirestore, deleteTaskFromFirestore, getTaskFromFirestore, getDailyLogs, getMonthlyLogs, getYearlyLogs } from './FirestoreUtils.js';
 import crypto from 'crypto';
 import dotenv from 'dotenv';
+import rateLimit from 'express-rate-limit';
 
 // Load environment variables from .env file
 dotenv.config();
@@ -14,6 +15,14 @@ const port = process.env.PORT || 4000;
 app.use(cors());
 app.use(AuthCheck.decodeToken);
 app.use(express.json());
+
+// Rate limiting middleware
+const limiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 100, // limit each IP to 100 requests per windowMs
+    message: 'Too many requests from this IP, please try again later'
+});
+app.use(limiter);
 
 // Encryption function
 const encryptData = (data) => {
